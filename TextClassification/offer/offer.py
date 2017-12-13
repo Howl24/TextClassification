@@ -276,13 +276,15 @@ class Offer:
 
     @classmethod
     def PrintAsCsv(cls, offers,
-                        configuration,
                         filename,
+                        configuration=None,
                         print_id=False,
                         print_labels=False,
                         field=None,
                         labels=None):
 
+        conf_features = ["Job Title", "Description", "Qualifications"]
+        
         with open(filename, "w") as csvfile:
             fieldnames = []
 
@@ -292,7 +294,7 @@ class Offer:
                 fieldnames.append(OFFER_MONTH_FIELD)
                 fieldnames.append(OFFER_SOURCE_FIELD)
 
-            fieldnames += list(configuration.features)
+            fieldnames += list(conf_features)
 
             if print_labels:
                 fieldnames += list(labels)
@@ -308,7 +310,7 @@ class Offer:
                     write_dict[OFFER_MONTH_FIELD] = offer.month
                     write_dict[OFFER_SOURCE_FIELD] = offer.source
 
-                for feature_name in configuration.features:
+                for feature_name in conf_features:
                     if feature_name in offer.features:
                         write_dict[feature_name] = offer.features[feature_name]
 
